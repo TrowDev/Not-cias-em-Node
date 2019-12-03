@@ -7,15 +7,20 @@ NoticiasDAO.prototype.passCon = (con) => {
 }
 
 NoticiasDAO.prototype.getNoticias = (callback) => {
-    this._conn.query("SELECT * FROM noticias;", callback);
+    this._conn.query("SELECT * FROM noticias ORDER BY data DESC;", callback);
 }
 
-NoticiasDAO.prototype.getNoticia = (callback) => {
-    this._conn.query("SELECT * FROM noticias WHERE id=2;", callback);
+NoticiasDAO.prototype.getNoticia = (idNoticia,callback) => {
+    console.log(idNoticia.id);
+    this._conn.query("SELECT * FROM noticias WHERE id="+idNoticia.id, callback);
 }
 
 NoticiasDAO.prototype.salvarNoticia = (noticia, callback) => {
     this._conn.query("INSERT INTO noticias SET ? ;", noticia, callback);
+}
+
+NoticiasDAO.prototype.get5UltimasNoticias = (callback)=>{
+    this._conn.query("SELECT * FROM noticias ORDER BY data DESC LIMIT 5;",callback);
 }
 
 module.exports = () => {
